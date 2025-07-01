@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -34,6 +35,7 @@ public class BaseClass {
 	private static ThreadLocal<ActionDriver> action = new ThreadLocal<>();
 	public static final Logger log = LoggerManager.getLogger(BaseClass.class);
 	protected ThreadLocal<SoftAssert> sofAssert = ThreadLocal.withInitial(SoftAssert::new);
+	private boolean isHeadless = false;
 
 	public SoftAssert getSoftAssert() {
 		return sofAssert.get();
@@ -84,27 +86,39 @@ public class BaseClass {
 
 			// Create ChromeOptions
 			ChromeOptions options = new ChromeOptions();
-			options.addArguments("--headless"); // Run Chrome in headless mode
-			options.addArguments("--disable-gpu"); // Disable GPU for headless mode
-			// options.addArguments("--window-size=1920,1080"); // Set window size
-			options.addArguments("--disable-notifications"); // Disable browser notifications
-			options.addArguments("--no-sandbox"); // Required for some CI environments like Jenkins
-			options.addArguments("--disable-dev-shm-usage"); // Resolve issues in resource-limited environments
+			// added new argument and boolean condition to handle window size issue in
+			// headless mode
+			options.addArguments("--headless=new");
+			isHeadless = true;
+			options.addArguments("--disable-gpu");
+			options.addArguments("--window-size=1920,1080");
+			options.addArguments("--disable-notifications");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--remote-allow-origins=*");
+//			options.addArguments("--headless=new"); // Run Chrome in headless mode
+//			options.addArguments("--disable-gpu"); // Disable GPU for headless mode
+//			options.addArguments("--window-size=1920,1080"); // Set window size
+//			options.addArguments("--disable-notifications"); // Disable browser notifications
+//			options.addArguments("--no-sandbox"); // Required for some CI environments like Jenkins
+//			options.addArguments("--disable-dev-shm-usage"); // Resolve issues in resource-limited environments
 
 			// driver = new ChromeDriver();
 			driver.set(new ChromeDriver(options)); // new changes as per thread local
+			getDriver().manage().window().setSize(new Dimension(1920, 1080)); // Critical!
 			ExtentManager.registerDriver(getDriver());
 			log.info("ChromeDriver launched");
 		} else if (browser.equalsIgnoreCase("edge")) {
-			
+
 			EdgeOptions options = new EdgeOptions();
 			options.addArguments("--headless"); // Run Edge in headless mode
+			isHeadless = true;
 			options.addArguments("--disable-gpu"); // Disable GPU acceleration
 			options.addArguments("--window-size=1920,1080"); // Set window size
 			options.addArguments("--disable-notifications"); // Disable pop-up notifications
 			options.addArguments("--no-sandbox"); // Needed for CI/CD
 			options.addArguments("--disable-dev-shm-usage"); // Prevent resource-limited crashes
-			
+
 			// driver = new EdgeDriver();
 			driver.set(new EdgeDriver(options));
 			ExtentManager.registerDriver(getDriver());
@@ -114,9 +128,11 @@ public class BaseClass {
 			// Create FirefoxOptions
 			FirefoxOptions options = new FirefoxOptions();
 			options.addArguments("--headless"); // Run Firefox in headless mode
+			isHeadless = true;
 			options.addArguments("--disable-gpu"); // Disable GPU rendering (useful for headless mode)
-			options.addArguments("--width=1920"); // Set browser width
-			options.addArguments("--height=1080"); // Set browser height
+			options.addArguments("--window-size=1920,1080");
+			// options.addArguments("--width=1920"); // Set browser width
+			// options.addArguments("--height=1080"); // Set browser height
 			options.addArguments("--disable-notifications"); // Disable browser notifications
 			options.addArguments("--no-sandbox"); // Needed for CI/CD environments
 			options.addArguments("--disable-dev-shm-usage"); // Prevent crashes in low-resource environments
@@ -131,8 +147,9 @@ public class BaseClass {
 	}
 
 	private void configureBrowser() {
-		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		getDriver().manage().window().maximize();
+		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		// getDriver().manage().window().maximize(); // Comment this line whenever want
+		// to run in headless as this causing screen size issues.
 		try {
 			getDriver().get(prop.getProperty("url"));
 		} catch (Exception e) {

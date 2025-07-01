@@ -31,7 +31,7 @@ public class ActionDriver {
 		this.driver = driver;
 		// this.prop = prop;
 		// int explicitwait = Integer.parseInt(prop.getProperty("explicitwait"));
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		log.info("WebDriver instance is created");
 	}
 
