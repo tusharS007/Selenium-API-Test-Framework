@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="OrangeHRMSuite" parallel="classes" thread-count="4">
+	<listeners>
+		<listener class-name="com.orangehrm.listners.TestListener"></listener>
+	</listeners>
+	<test name="OrangeHRMSuite">
+		<classes>
+			<class name="com.orangehrm.test.DummyClass"></class>
+			<class name="com.orangehrm.test.DummyClass2"></class>
+			<class name="com.orangehrm.test.LoginTest"></class>
+			<class name="com.orangehrm.test.HomePageTest"></class>
+			<class name="com.orangehrm.test.ApiTest"></class>
+		</classes>
+	</test>
+</suite>
