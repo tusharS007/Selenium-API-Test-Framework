@@ -10,7 +10,7 @@ public class DummyClass2 extends BaseClass {
 	@Test
 	public void dummyTEst() {
 		// ExtentManager.startTest("Dummy Test2"); - This has been implemented in test Listener
-		//Test Checking last
+		//Test Checking last for jenkins pipeline job
 		String title = getDriver().getTitle();
 		ExtentManager.logStep("Verifying title");
 		Assert.assertEquals(title, "OrangeHRM");
