@@ -10,6 +10,7 @@ public class DummyClass2 extends BaseClass {
 	@Test
 	public void dummyTEst() {
 		// ExtentManager.startTest("Dummy Test2"); - This has been implemented in test Listener
+		//using ngrok url
 		String title = getDriver().getTitle();
 		ExtentManager.logStep("Verifying title");
 		Assert.assertEquals(title, "OrangeHRM");
