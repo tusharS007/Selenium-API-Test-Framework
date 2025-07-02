@@ -143,13 +143,14 @@ public class BaseClass {
 			} else if (browser.equalsIgnoreCase("edge")) {
 
 				EdgeOptions options = new EdgeOptions();
-				options.addArguments("--headless"); // Run Edge in headless mode
+				options.addArguments("--headless=new"); // Run Edge in headless mode
 				isHeadless = true;
 				options.addArguments("--disable-gpu"); // Disable GPU acceleration
 				options.addArguments("--window-size=1920,1080"); // Set window size
 				options.addArguments("--disable-notifications"); // Disable pop-up notifications
 				options.addArguments("--no-sandbox"); // Needed for CI/CD
 				options.addArguments("--disable-dev-shm-usage"); // Prevent resource-limited crashes
+				options.setBinary("C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe");
 
 				// driver = new EdgeDriver();
 				driver.set(new EdgeDriver(options));
