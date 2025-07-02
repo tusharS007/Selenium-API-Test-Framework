@@ -143,7 +143,7 @@ public class BaseClass {
 			} else if (browser.equalsIgnoreCase("edge")) {
 
 				EdgeOptions options = new EdgeOptions();
-				options.addArguments("--headless=new"); // Run Edge in headless mode
+				options.addArguments("--headless"); // Run Edge in headless mode
 				isHeadless = true;
 				options.addArguments("--disable-gpu"); // Disable GPU acceleration
 				options.addArguments("--window-size=1920,1080"); // Set window size
