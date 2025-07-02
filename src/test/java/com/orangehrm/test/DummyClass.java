@@ -10,7 +10,7 @@ import com.orangehrm.utilities.ExtentManager;
 public class DummyClass extends BaseClass {
 	@Test
 	public void dummyTEst() {
-		//Test checking
+		//Test checking for auto build execution
 		//ExtentManager.startTest("Dummy Test"); - This has been implemented in test Listener
 		String title = getDriver().getTitle();
 		ExtentManager.logStep("Verifying title");
