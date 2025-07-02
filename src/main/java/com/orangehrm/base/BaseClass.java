@@ -150,7 +150,8 @@ public class BaseClass {
 				options.addArguments("--disable-notifications"); // Disable pop-up notifications
 				options.addArguments("--no-sandbox"); // Needed for CI/CD
 				options.addArguments("--disable-dev-shm-usage"); // Prevent resource-limited crashes
-				//options.setBinary("C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe");
+				options.setBinary("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe");
+				//"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 				// driver = new EdgeDriver();
 				driver.set(new EdgeDriver(options));
