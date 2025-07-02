@@ -88,10 +88,11 @@ public class BaseClass {
 			ChromeOptions options = new ChromeOptions();
 			// added new argument and boolean condition to handle window size issue in
 			// headless mode
-			options.addArguments("--headless=new");
+			options.setBinary(System.getenv("CHROME_BIN"));
+			options.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
 			isHeadless = true;
-			options.addArguments("--disable-gpu");
-			options.addArguments("--window-size=1920,1080");
+			//options.addArguments("--disable-gpu");
+			//options.addArguments("--window-size=1920,1080");
 			options.addArguments("--disable-notifications");
 			options.addArguments("--no-sandbox");
 			options.addArguments("--disable-dev-shm-usage");

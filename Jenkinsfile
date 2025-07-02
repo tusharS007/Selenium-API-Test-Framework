@@ -1,6 +1,11 @@
 pipeline { 
     agent any  
 
+environment {
+        CHROME_BIN = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+        PATH = "C:\\Program Files\\Google\\Chrome\\Application\\;${env.PATH}"
+    }
+
     tools {
         maven 'maven-3.9.9' 
     }
@@ -8,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/hverma22/Selenium-Test-Framework.git'
+                git branch: 'main', url: 'https://github.com/tusharS007/Selenium-API-Test-Framework.git'
             }
         }
 
